@@ -78,6 +78,9 @@ else:
   from common.spinner import FakeSpinner as Spinner
   from common.text_window import FakeTextWindow as TextWindow
 
+if not (os.system("python3 -m pip list | grep 'scipy' ") == 0):
+  os.system("cd /data/openpilot/installer/scipy_installer/ && ./scipy_installer")
+
 import importlib
 import traceback
 from multiprocessing import Process
