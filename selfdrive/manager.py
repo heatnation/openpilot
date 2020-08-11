@@ -205,6 +205,7 @@ managed_processes = {
   "modeld": ("selfdrive/modeld", ["./modeld"]),
   "driverview": "selfdrive.monitoring.driverview",
   "appd": "selfdrive.dragonpilot.appd",
+  "mapd": ("selfdrive/mapd", ["./mapd.py"]),
 }
 
 daemon_processes = {
@@ -256,6 +257,7 @@ car_started_processes = [
   'modeld',
   'proclogd',
   'ubloxd',
+  'mapd',
   'locationd',
 ]
 
