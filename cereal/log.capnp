@@ -1739,6 +1739,13 @@ struct GPSPlannerPlan {
   xLookahead @7 :Float32;
 }
 
+struct LiveTrafficData {
+  speedLimitValid @0 :Bool;
+  speedLimit @1 :Float32;
+  speedAdvisoryValid @2 :Bool;
+  speedAdvisory @3 :Float32;
+}
+
 struct TrafficEvent @0xacfa74a094e62626 {
   type @0 :Type;
   distance @1 :Float32;
@@ -2061,6 +2068,7 @@ struct Event {
     liveLocationKalman @72 :LiveLocationKalman;
     sentinel @73 :Sentinel;
     dragonConf @74 :DragonConf;
+    liveTrafficData @75:LiveTrafficData;
   }
 }
 
