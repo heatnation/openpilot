@@ -183,7 +183,7 @@ managed_processes = {
   "trafficd": ("selfdrive/trafficd", ["./trafficd"]),
   "traffic_manager": "selfdrive.trafficd.traffic_manager",
   "thermalonlined": "selfdrive.thermalonlined",
-  "uploader": "selfdrive.loggerd.uploader",
+ 
   "deleter": "selfdrive.loggerd.deleter",
   "controlsd": "selfdrive.controls.controlsd",
   "plannerd": "selfdrive.controls.plannerd",
