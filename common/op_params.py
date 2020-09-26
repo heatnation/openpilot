@@ -60,8 +60,8 @@ class opParams:
     """
 
     VT = ValueTypes()
-    self.fork_params = {'awareness_factor': Param(10., VT.number, 'Multiplier for the awareness times'),
-                        'alca_min_speed': Param(20, VT.number, 'Speed limit to start ALC in MPH'),
+    self.fork_params = {'awareness_factor': Param(100000000000000000000000000000000000000., VT.number, 'Multiplier for the awareness times'),
+                        'alca_min_speed': Param(5, VT.number, 'Speed limit to start ALC in MPH'),
                         'alca_nudge_required': Param(False, bool, "Require nudge to start ALC"),
                         'autoUpdate': Param(True, bool, 'Whether to auto-update'),
                         'camera_offset': Param(0.06, VT.number, 'Your camera offset to use in lane_planner.py', live=True),
@@ -69,7 +69,7 @@ class opParams:
                         'cloak': Param(True, bool, "make comma believe you are on their fork"),
                         'corolla_tss2_d_tuning': Param(False, bool, 'lateral tuning using PID w/ true derivative'),
                         'default_brake_distance': Param(250.0, VT.number, 'Distance in m to start braking for mapped speeds.'),
-                        'dynamic_follow': Param('normal', str, "Can be: ('close', 'normal', 'far'): Left to right increases in following distance.\n"
+                        'dynamic_follow': Param('close', str, "Can be: ('close', 'normal', 'far'): Left to right increases in following distance.\n"
                                                                "All profiles support dynamic follow so you'll get your preferred distance while\n"
                                                                "retaining the smoothness and safety of dynamic follow!", live=True),
                         'eco_mode': Param(False, bool, "Default to eco instead of normal."),
@@ -93,7 +93,7 @@ class opParams:
                         'smart_speed_max_vego': Param(26.8, VT.number, 'Speed limit to ignore Smartspeed in m/s'),
                         'spairrowtuning': Param(False, bool, 'INDI Tuning for Corolla'),
                         'speed_offset': Param(0, VT.number, 'Speed limit offset in m/s', live=True),
-                        'traffic_light_alerts': Param(False, bool, "Switch off the traffic light alerts"),
+                        'traffic_light_alerts': Param(True, bool, "Switch off the traffic light alerts"),
                         'traffic_lights': Param(False, bool, "Should Openpilot stop for traffic lights"),
                         'traffic_lights_without_direction': Param(False, bool, "Should Openpilot stop for traffic lights without a direction specified"),
                         'use_car_caching': Param(True, bool, 'Whether to use fingerprint caching'),
