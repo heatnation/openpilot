@@ -1,1 +1,1 @@
-#define COMMA_VERSION "0.7.7-ARG"
+#define COMMA_VERSION "0.7.8-ARG"
