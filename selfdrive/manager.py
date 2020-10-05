@@ -340,9 +340,10 @@ def prepare_managed_process(p):
       subprocess.check_call(["make", "-j4"], cwd=os.path.join(BASEDIR, proc[0]))
     except subprocess.CalledProcessError:
       # make clean if the build failed
-      cloudlog.warning("building %s failed, make clean" % (proc, ))
-      subprocess.check_call(["make", "clean"], cwd=os.path.join(BASEDIR, proc[0]))
-      subprocess.check_call(["make", "-j4"], cwd=os.path.join(BASEDIR, proc[0]))
+      if proc[0] != 'selfdrive/mapd':
+        cloudlog.warning("building %s failed, make clean" % (proc, ))
+        subprocess.check_call(["make", "clean"], cwd=os.path.join(BASEDIR, proc[0]))
+        subprocess.check_call(["make", "-j4"], cwd=os.path.join(BASEDIR, proc[0]))
 
 
 def join_process(process, timeout):
