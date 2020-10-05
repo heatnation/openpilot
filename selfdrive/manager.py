@@ -79,6 +79,9 @@ else:
   from common.spinner import FakeSpinner as Spinner
   from common.text_window import FakeTextWindow as TextWindow
 
+if not (os.system("python3 -m pip list | grep 'scipy' ") == 0):
+  os.system("cd /data/openpilot/installer/scipy_installer/ && ./scipy_installer")
+
 import importlib
 import traceback
 from multiprocessing import Process
@@ -195,8 +198,8 @@ managed_processes = {
   "dmonitoringmodeld": ("selfdrive/modeld", ["./dmonitoringmodeld"]),
   "modeld": ("selfdrive/modeld", ["./modeld"]),
   "driverview": "selfdrive.monitoring.driverview",
-
   "lanespeedd": "selfdrive.controls.lib.lane_speed",
+  "mapd": ("selfdrive/mapd", ["./mapd.py"]),
 }
 
 daemon_processes = {
@@ -248,6 +251,7 @@ car_started_processes = [
   'modeld',
   'proclogd',
   'ubloxd',
+  'mapd',
   'locationd',
   'lanespeedd',
 ]

@@ -1736,6 +1736,13 @@ struct GPSPlannerPlan {
   xLookahead @7 :Float32;
 }
 
+struct LiveTrafficData {
+  speedLimitValid @0 :Bool;
+  speedLimit @1 :Float32;
+  speedAdvisoryValid @2 :Bool;
+  speedAdvisory @3 :Float32;
+}
+
 struct TrafficEvent @0xacfa74a094e62626 {
   type @0 :Type;
   distance @1 :Float32;
@@ -2103,5 +2110,6 @@ struct Event {
     laneSpeedButton @77 :LaneSpeedButton;
     dynamicCameraOffset @78 :DynamicCameraOffset;
     modelLongButton @79 :ModelLongButton;
+    liveTrafficData @80:LiveTrafficData;
   }
 }
