@@ -23,7 +23,7 @@ offset = 0
 osm = True
 
 MAX_SPEED = 255.0
-
+NO_CURVATURE_SPEED = 90.0
 LON_MPC_STEP = 0.2  # first step is 0.2s
 MAX_SPEED_ERROR = 2.0
 AWARENESS_DECEL = -0.2     # car smoothly decel at .2m/s^2 when user is distracted
@@ -141,6 +141,9 @@ class Planner():
     enabled = (long_control_state == LongCtrlState.pid) or (long_control_state == LongCtrlState.stopping)
     following = lead_1.status and lead_1.dRel < 45.0 and lead_1.vLeadK > v_ego and lead_1.aLeadK > 0.0
 
+    v_speedlimit = NO_CURVATURE_SPEED
+    v_curvature_map = NO_CURVATURE_SPEED
+    v_speedlimit_ahead = NO_CURVATURE_SPEED
     now = datetime.now()
     try:
       if sm['liveMapData'].speedLimitValid and osm and self.osm and (sm['liveMapData'].lastGps.timestamp -time.mktime(now.timetuple()) * 1000) < 10000 and (smart_speed or smart_speed_max_vego > v_ego):
@@ -222,6 +225,10 @@ class Planner():
         self.a_acc_start = required_decel
         v_speedlimit_ahead = v_ego
 
+      v_cruise_setpoint = min([v_cruise_setpoint, v_curvature_map, v_speedlimit, v_speedlimit_ahead])
+      #if (self.mpc1.prev_lead_status and self.mpc1.v_mpc < v_ego*0.99) or (self.mpc2.prev_lead_status and self.mpc2.v_mpc < v_ego*0.99):
+      #  v_cruise_setpoint = v_ego
+
       self.v_cruise, self.a_cruise = speed_smoother(self.v_acc_start, self.a_acc_start,
                                                     v_cruise_setpoint,
                                                     accel_limits_turns[1], accel_limits_turns[0],
@@ -297,7 +304,7 @@ class Planner():
     plan_send.plan.vCurvature = float(v_curvature_map)
     plan_send.plan.decelForTurn = bool(decel_for_turn)
     plan_send.plan.mapValid = True
-    
+
     radar_valid = not (radar_dead or radar_fault)
     plan_send.plan.radarValid = bool(radar_valid)
     plan_send.plan.radarCanError = bool(radar_can_error)
