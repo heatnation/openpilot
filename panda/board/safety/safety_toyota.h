@@ -4,8 +4,8 @@ const int TOYOTA_MAX_TORQUE = 1500;       // max torque cmd allowed ever
 // rate based torque limit + stay within actually applied
 // packet is sent at 100hz, so this limit is 1000/sec
 const int TOYOTA_MAX_RATE_UP = 10;        // ramp up slow
-const int TOYOTA_MAX_RATE_DOWN = 25;      // ramp down fast
-const int TOYOTA_MAX_TORQUE_ERROR = 350;  // max torque cmd in excess of torque motor
+const int TOYOTA_MAX_RATE_DOWN = 44;      // ramp down fast
+const int TOYOTA_MAX_TORQUE_ERROR = 500;  // max torque cmd in excess of torque motor
 
 // real time torque limit to prevent controls spamming
 // the real time limit is 1500/sec
@@ -37,7 +37,7 @@ const CanMsg TOYOTA_TX_MSGS[] = {{0x283, 0, 7}, {0x2E6, 0, 8}, {0x2E7, 0, 8}, {0
 AddrCheckStruct toyota_rx_checks[] = {
   {.msg = {{ 0xaa, 0, 8, .check_checksum = false, .expected_timestep = 12000U}}},
   {.msg = {{0x260, 0, 8, .check_checksum = true, .expected_timestep = 20000U}}},
-  {.msg = {{0x1D2, 0, 8, .check_checksum = true, .expected_timestep = 30000U}}},
+  {.msg = {{0x1D3, 0, 8, .check_checksum = true, .expected_timestep = 30000U}}},
   {.msg = {{0x224, 0, 8, .check_checksum = false, .expected_timestep = 25000U},
            {0x226, 0, 8, .check_checksum = false, .expected_timestep = 25000U}}},
 };
@@ -87,9 +87,9 @@ static int toyota_rx_hook(CAN_FIFOMailBox_TypeDef *to_push) {
 
     // enter controls on rising edge of ACC, exit controls on ACC off
     // exit controls on rising edge of gas press
-    if (addr == 0x1D2) {
-      // 5th bit is CRUISE_ACTIVE
-      int cruise_engaged = GET_BYTE(to_push, 0) & 0x20;
+    if (addr == 0x1D3) {
+      // 15th bit is MAIN_ON
+      int cruise_engaged = GET_BYTE(to_push, 1) >> 7;
       if (!cruise_engaged) {
         controls_allowed = 0;
       }
